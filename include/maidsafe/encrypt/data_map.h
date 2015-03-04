@@ -47,6 +47,16 @@ struct ChunkDetails {
   ChunkDetails& operator=(const ChunkDetails&) = default;
   ~ChunkDetails() = default;
 
+  template<typename Archive>
+  Archive& serialize(Archive& ar) {
+    return ar(hash, pre_hash, storage_state, size);
+  }
+
+  template<typename HashAlgorithm>
+  void HashAppend(HashAlgorithm& hash_function) const {
+    hash_function(hash, pre_hash, storage_state, size);
+  }
+
   ByteVector hash;      // SHA512 of processed chunk
   ByteVector pre_hash;  // SHA512 of unprocessed src data
   // pre hashes of chunks n-1 and n-2, only valid if chunk n-1 or n-2 has
@@ -63,6 +73,16 @@ struct DataMap {
   ~DataMap() = default;
   uint64_t size() const;
   bool empty() const;
+
+  template<typename Archive>
+  Archive& serialize(Archive& ar) {
+    return ar(self_encryption_version, chunks, content);
+  }
+
+  template<typename HashAlgorithm>
+  void HashAppend(HashAlgorithm& hash) const {
+    hash(self_encryption_version, chunks, content);
+  }
 
   EncryptionAlgorithm self_encryption_version;
   std::vector<ChunkDetails> chunks;
