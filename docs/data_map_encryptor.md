@@ -1,11 +1,11 @@
 ```
                    +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+
-Parent Container : |  512-Cipher-Key  |  512-HMAC-Key  |
+  Parent Container :  512-Cipher-Key  :  512-HMAC-Key  :
                    +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+
                             |
    -------------------------
   |                +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+
-  |    Container : |  512-Cipher-Key  |  512-HMAC-Key  |  64-bit Version Number  |  Contents  |
+  |      Container :  512-Cipher-Key  :  512-HMAC-Key  :  64-bit Version Number  :  Contents  :
   |                +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+
    --------------                          |             |              |                  |
                  |                        /         ---  |  ---- +1 ----                   |
@@ -14,9 +14,9 @@ Parent Container : |  512-Cipher-Key  |  512-HMAC-Key  |
                  |                      |          |                                    |    |
                  \/                     \/         \/                                   |    |
          +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+   |    |
-SHA512 : |  512-Cipher-Key  |  512-Cipher-Key  |  64-bit Counter  |  64-bit Random  |   |    |
+  SHA512 :  512-Cipher-Key  :  512-Cipher-Key  :  64-bit Counter  :  64-bit Random  :   |    |
          +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+   |    |
-                                |  256-bits  |  256 bits  |                 |           |    |
+                                :  256-bits  :  256 bits  :                 |           |    |
                                 +~~~~~~~~~~~~~~~~~~~~~~~~~+                 |           |    |
                                       |             |         ------------  |  ------   |  --
                                        \           /         |              |           |
@@ -24,16 +24,16 @@ SHA512 : |  512-Cipher-Key  |  512-Cipher-Key  |  64-bit Counter  |  64-bit Rand
                                          |       |           |              |           |
                                          \/     \/           \/             |           |
                                      +~~~~~~~~~~~~~~~~~~~~~~~~~~~~+         |           |
-                        AES-256-CBC: |  KEY  |  IV  |  Plaintext  |         |           |
+                        AES-256-CBC: :  KEY  :  IV  :  Plaintext  :         |           |
                                      +~~~~~~~~~~~~~~~~~~~~~~~~~~~~+         |           |
-                                            |  Ciphertext  |                |           |
+                                            :  Ciphertext  :                |           |
                                             +~~~~~~~~~~~~~~+                |           |
                                                     |                       |           |
                                     --------------  |  ---------------------            |
                                    |                |                                   |
                                    \/               \/                                  |
                           +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+               |
-  Data Stored on Network: |  64-bit Random  |  Ciphertext  |  HMAC-512  |               |
+   Data Stored on Network :  64-bit Random  :  Ciphertext  :  HMAC-512  :               |
                           +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+               |
                                           \   |                 /\                      |
                                            \  |                 |                       |
@@ -41,9 +41,9 @@ SHA512 : |  512-Cipher-Key  |  512-Cipher-Key  |  64-bit Counter  |  64-bit Rand
                                       |     | |                 |
                                       \/   \/ \/                |
                                  +~~~~~~~~~~~~~~~~~+            |
-                      HMAC-512 : |  Key  |  Input  |            |
+                        HMAC-512 :  Key  :  Input  :            |
                                  +~~~~~~~~~~~~~~~~~+            |
-                                      |  HMAC  |                |
+                                      :  HMAC  :                |
                                       +~~~~~~~~+                |
                                           |                     |
                                            ---------------------
