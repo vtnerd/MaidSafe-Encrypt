@@ -88,7 +88,8 @@ Chosen plaintext attacks are theoretically possible if the 64-bit counter cycles
 
 ## HMAC-512 ##
 ### Authentication Selection ###
-### Input Selection ###
+### Key Selection ###
+The key to the HMAC is `Parent 512-bit HMAC Key || 512-bit HMAC Key` where `||` denotes concatenation.
 ##### Parent 512-bit HMAC Key #####
 > * This value is kept secret.
 > * This value is different from the Parent 512-bit Cipher Key
@@ -100,3 +101,8 @@ The network-address for the [SDV](https://github.com/maidsafe/MaidSafe-Common/bl
 > * This value is different from the 512-bit Cipher Key
 
 Guarantees that the HMAC key is different from its parent.
+
+### Input Selection ###
+##### Ciphertext #####
+##### 64-bit Counter #####
+##### 64-bit Random Value #####
