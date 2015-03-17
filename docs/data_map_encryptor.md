@@ -86,7 +86,7 @@ Each SDV stored on the network has an incremented counter used for identificatio
 ##### 64-bit Random Value #####
 Chosen plaintext attacks are theoretically possible if the 64-bit counter cycles. Including a random value makes the attack more difficult since the key/iv will be unpredictable even after the counter cycles.
 
-## HMAC-512 ##
+## HMAC-SHA512 ##
 ### Authentication Selection ###
 ### Key Selection ###
 The key to the HMAC is `Parent 512-bit HMAC Key || 512-bit HMAC Key` where `||` denotes concatenation.
