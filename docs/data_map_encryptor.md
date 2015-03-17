@@ -94,7 +94,7 @@ The key to the HMAC is `Parent 512-bit HMAC Key || 512-bit HMAC Key` where `||` 
 > * This value is kept secret.
 > * This value is different from the Parent 512-bit Cipher Key
 
-The network-address for the [SDV](https://github.com/maidsafe/MaidSafe-Common/blob/next/docs/structured_data_versions_update.md) used by a [Container](https://github.com/maidsafe/MaidSafe-Common/blob/next/docs/posix_api.md) is the SHA512 of its HMAC-key. An attacker could brute force this value offline, or could accidentally generate the same value if RNG is poor. Mixing the parent HMAC key makes this difficult since the parent container is never referenced by the container. So a brute forcing `Container 512-bit HMAC key -> NAE (SHA512)` would only yield half of the value needed to generated a HMAC.
+The network-address for the [SDV](https://github.com/maidsafe/MaidSafe-Common/blob/next/docs/structured_data_versions_update.md) used by a [Container](https://github.com/maidsafe/MaidSafe-Common/blob/next/docs/posix_api.md) is the SHA512 of its HMAC-key. An attacker could brute force this value offline, or could accidentally generate the same value if RNG is poor. Mixing the parent HMAC key makes this difficult since the parent container is never referenced by the container. So a brute forcing `512-bit HMAC key -> NAE (SHA512)` would only yield half of the value needed to generated a HMAC.
 
 ##### 512-bit HMAC Key #####
 > * This value is kept secret.
