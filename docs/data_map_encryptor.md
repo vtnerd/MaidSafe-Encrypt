@@ -1,16 +1,16 @@
 # Data Map Encryption #
-Encryption of the data map uses 256-bit AES in CBC mode. The key/iv are taken from the output of SHA512, which is given a secret 512-bit key from the parent container, a secret 512-bit key from the current container, a publicly known 64-bit counter, and a publicly known randomly generated 64-bit value. The ciphertext, counter, and 64-bit random value are authenticated using HMAC-SHA512, with two entirely different secret 512-bit keys.
+Encryption of the data map uses 256-bit AES in CBC mode. The key/iv are taken from the output of SHA512, which is given a secret 512-bit key from the parent, a secret 512-bit key from the current, a publicly known 64-bit counter, and a publicly known randomly generated 64-bit value. The ciphertext, counter, and 64-bit random value are authenticated using HMAC-SHA512, with two entirely different secret 512-bit keys.
 
 ## Diagram ##
 ```
                       *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
-     Parent Container :  512-HMAC-Key  :  512-Cipher-Key  :
+               Parent :  512-HMAC-Key  :  512-Cipher-Key  :
                       *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
                             |                  |
 +---------------------------+                  |
 |       +--------------------------------------+
 |       |             *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
-|       |   Container :  512-HMAC-Key  :  512-Cipher-Key  :  64-bit Version Number  :  Contents  :
+|       |     Current :  512-HMAC-Key  :  512-Cipher-Key  :  64-bit Version Number  :  Contents  :
 |       |             *~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*
 |       |                         |            |                          |                |
 |  +--  |  -----------------------+            |         +------- ++1 ----+                |
@@ -66,4 +66,37 @@ However, CBC mode can be used incorrectly if an attacker knows the ciphertext of
 
 ## SHA512 KDF ##
 ### Hash Function Selection ###
+SHA512 is used throughout SAFE, so its use was continued here. HKDF was considered since the intended use is _exactly_ for this situation, however Cryptopp does not have an implementation. Rather than implement on our own, we went with SHA512 and kept the input fixed in length (no length extension attacks).
+
 ### Input Selection ###
+The KDF is `SHA512(Parent 512-bit Cipher Key || 512-bit Cipher Key || 64-bit counter || 64-bit random value)` where `||` denotes concatenation.
+
+##### Parent 512-bit Cipher Key #####
+Previously the `[finish thought]`.
+
+##### 512-bit Cipher Key #####
+> * This value is kept secret.
+> * This value is different from the 512-bit HMAC Key
+
+Guarantees that the Cipher key is different from its parent.
+
+##### 64-bit Counter #####
+Each SDV stored on the network has an incremented counter used for identification. This counter is provided to the encryption routine, which guarantees that the key/iv changes between versions, even if the random number generator is poor. This makes chosen plaintext attacks more difficult (have to wait 2^64 cycles), and ensures information leakage between versions is not possible.
+
+##### 64-bit Random Value #####
+Chosen plaintext attacks are theoretically possible if the 64-bit counter cycles. Including a random value makes the attack more difficult since the key/iv will be unpredictable even after the counter cycles.
+
+## HMAC-512 ##
+### Authentication Selection ###
+### Input Selection ###
+##### Parent 512-bit HMAC Key #####
+> * This value is kept secret.
+> * This value is different from the Parent 512-bit Cipher Key
+
+The network-address for the [SDV](https://github.com/maidsafe/MaidSafe-Common/blob/next/docs/structured_data_versions_update.md) used by a [Container](https://github.com/maidsafe/MaidSafe-Common/blob/next/docs/posix_api.md) is the SHA512 of its HMAC-key. An attacker could brute force this value offline, or could accidentally generate the same value if RNG is poor. Mixing the parent HMAC key makes this difficult since the parent container is never referenced by the container. So a brute forcing `Container 512-bit HMAC key -> NAE (SHA512)` would only yield half of the value needed to generated a HMAC.
+
+##### 512-bit HMAC Key #####
+> * This value is kept secret.
+> * This value is different from the 512-bit Cipher Key
+
+Guarantees that the HMAC key is different from its parent.
