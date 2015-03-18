@@ -1,5 +1,5 @@
 # Data Map Encryption #
-Encryption of the data map uses 256-bit AES in CBC mode. The key/iv are taken from the output of SHA512, which is given a secret 512-bit key from the parent, a secret 512-bit key from the current, a publicly known 64-bit counter, and a publicly known randomly generated 64-bit value. The ciphertext, counter, and 64-bit random value are authenticated using HMAC-SHA512, with two entirely different secret 512-bit keys.
+Encryption of the data map uses 256-bit AES in CBC mode. The key/iv are taken from the output of SHA512, which is given a secret 512-bit key from the parent, another secret 512-bit key, a publicly known 64-bit counter, and a publicly known randomly generated 64-bit value. The ciphertext, counter, and 64-bit random value are authenticated using HMAC-SHA512, with two entirely different secret 512-bit keys.
 
 ## Diagram ##
 ```
