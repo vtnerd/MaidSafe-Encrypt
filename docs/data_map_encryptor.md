@@ -47,7 +47,7 @@ Encryption of the data map uses 256-bit AES in CBC mode. The key/iv are taken fr
                                       |  |     | |   |             |
                                      \/  \/   \/ \/ \/             |
                                     *~~~~~~~~~~~~~~~~~*            |
-                           HMAC-512 :  Key  :  Input  :            |
+                        HMAC-SHA512 :  Key  :  Input  :            |
                                     *~~~~~~~~~~~~~~~~~*            |
                                          :  HMAC  :                |
                                          *~~~~~~~~*                |
