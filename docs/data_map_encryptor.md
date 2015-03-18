@@ -66,7 +66,7 @@ However, CBC mode can be used incorrectly if an attacker knows the ciphertext of
 
 ## SHA512 KDF ##
 ### Hash Function Selection ###
-SHA512 is used throughout SAFE, so its use was continued here. HKDF was considered since the intended use is _exactly_ for this situation, however Cryptopp does not have an implementation. Rather than implement on our own, we went with SHA512 and kept the input fixed in length (no length extension attacks).
+SHA512 is used throughout SAFE, so its use was continued here. HKDF was considered since the intended use is _exactly_ for this situation, however Cryptopp does not have an implementation. Rather than provide our own HKDF implementation, SHA512 was used carefully. The source keys are being compressed not expanded (multiple hash outputs are not combined), and the inputs to the hash function are fixed in length and only the counter can be "manipulated" by an attacker.
 
 ### Input Selection ###
 The KDF is `SHA512(Parent 512-bit Cipher Key || 512-bit Cipher Key || 64-bit counter || 64-bit random value)` where `||` denotes concatenation.
