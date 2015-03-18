@@ -90,6 +90,8 @@ Chosen plaintext attacks are theoretically possible if the 64-bit counter cycles
 
 ## HMAC-SHA512 ##
 ### Authentication Selection ###
+HMAC-SHA512 was chosen because its [recommended by cryptographers](http://blog.cryptographyengineering.com/2012/05/how-to-choose-authenticated-encryption.html), and relatively simple to use. It is less performant than a mode that does MAC+Encrypt in one stage, but several of these types are patented, and GCM can never re-use a key/iv pair (it fails less gracefully then AES-CBC-HMAC if the RNG fails to generate a unique value for the same counter value).
+
 ### Key Selection ###
 The key to the HMAC is `Parent 512-bit HMAC Key || 512-bit HMAC Key` where `||` denotes concatenation.
 ##### Parent 512-bit HMAC Key #####
