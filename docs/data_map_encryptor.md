@@ -81,6 +81,8 @@ Previously the `[finish thought]`.
 Guarantees that the Cipher key is different from its parent.
 
 ##### 64-bit Counter #####
+> In the [diagram](#encryption-diagram) above, the counter is not listed as one of the values stored on the network. Thats because its stored elsewhere, in the [SDV](https://github.com/maidsafe/MaidSafe-Common/blob/next/docs/structured_data_versions_update.md) itself. The network rejects an SDV update if the index is **not** +1 its parent.
+
 Each SDV stored on the network has an incremented counter used for identification. This counter is provided to the encryption routine, which guarantees that the key/iv changes between versions, even if the random number generator is poor. This makes chosen plaintext attacks more difficult (have to wait 2^64 cycles), and ensures information leakage between versions is not possible.
 
 ##### 64-bit Random Value #####
