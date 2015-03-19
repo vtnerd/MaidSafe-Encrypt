@@ -23,6 +23,8 @@
 #include <string>
 #include <vector>
 
+#include "cereal/types/common.hpp"
+
 #include "maidsafe/common/config.h"
 #include "maidsafe/common/crypto.h"
 #include "maidsafe/common/types.h"
